@@ -29,7 +29,7 @@ jobs:
 
       - name: Run Tox
         run: |
-          tox -e wo-fix
+          tox -e wo-fix --parallel live
   test-tox-wfix:
     runs-on: windows-latest
     steps:
@@ -53,7 +53,7 @@ jobs:
 
       - name: Run Tox
         run: |
-          tox -e wfix
+          tox -e wfix --parallel live
   test-py-wo-fix:
     runs-on: windows-latest
     steps:
