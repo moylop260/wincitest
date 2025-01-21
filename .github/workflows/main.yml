@@ -73,6 +73,25 @@ jobs:
       - name: Run Python script
         run: |
           python -c "print('Fixing example ⚒')"
+  test-py-wo-fix-ascii:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Force cp1252 encoding
+        run: |
+          chcp 1252
+          echo "PYTHONIOENCODING=cp1252" >> $GITHUB_ENV
+
+      - name: Run Python script
+        run: |
+          python -c "print('Fixing example ✓')"
   test-py-w-fix:
     runs-on: windows-latest
     steps:
