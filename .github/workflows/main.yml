@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Tox
         run: |
-          pip install tox
+          pip install -Ur requirements.txt
 
       - name: Run Tox
         run: |
