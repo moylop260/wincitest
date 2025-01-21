@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  test_tox:
+  test-tox-wo-fix:
     runs-on: windows-latest
     steps:
       - name: Checkout code
@@ -29,8 +29,32 @@ jobs:
 
       - name: Run Tox
         run: |
-          tox
-  test-py:
+          tox -e wo-fix
+  test-tox-wfix:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Force cp1252 encoding
+        run: |
+          chcp 1252
+          echo "PYTHONIOENCODING=cp1252" >> $GITHUB_ENV
+
+      - name: Install Tox
+        run: |
+          pip install -Ur requirements.txt
+
+      - name: Run Tox
+        run: |
+          tox -e wfix
+  test-py-wo-fix:
     runs-on: windows-latest
     steps:
       - name: Checkout code
@@ -49,3 +73,22 @@ jobs:
       - name: Run Python script
         run: |
           python -c "print('Fixing example ⚒')"
+  test-py-w-fix:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Force cp1252 encoding
+        run: |
+          chcp 1252
+          echo "PYTHONIOENCODING=cp1252" >> $GITHUB_ENV
+
+      - name: Run Python script
+        run: |
+          python -c "import sys; import io; sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8');print('Fixing example ⚒')"
