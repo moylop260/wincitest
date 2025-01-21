@@ -17,11 +17,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Force cp1252 encoding
+      - name: Install Tox
         run: |
-          chcp 1252
-          echo "PYTHONIOENCODING=cp1252" >> $GITHUB_ENV
+          pip install tox
 
-      - name: Run Python script
+      - name: Run Tox
         run: |
-          python -c "print('Fixing example ⚒')"
+          tox
